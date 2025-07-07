@@ -1,0 +1,76 @@
+@startuml diagrama-calificacion
+!theme plain
+title Caso de Uso - Parte 3: Calificación del Viaje
+
+actor "Usuario" as U
+participant "UserUI" as UI
+participant "DriverController" as CC
+participant "Trip" as V
+participant "DriverRepository" as CR
+participant "Driver" as CON
+
+== Inicio del Proceso de Calificación ==
+note over UI
+  Viaje completado exitosamente
+  Estado actual: COMPLETADO
+end note
+
+UI --> U: "⭐ CALIFICA TU VIAJE"
+
+== Obtener Datos del Conductor ==
+UI -> V: getDriver()
+V --> UI: driver
+UI -> CON: getName()
+CON --> UI: nombre del conductor
+
+UI --> U: "¿Cómo fue tu experiencia con [Conductor]?"
+
+== El Usuario Elige su Calificación ==
+note over U
+  El usuario evalúa su experiencia
+  y decide dar 5 estrellas
+end note
+
+U -> UI: Seleccionar "5 estrellas ⭐⭐⭐⭐⭐"
+
+== Procesamiento de la Calificación ==
+UI -> CC: rateDriver(trip, 5)
+CC -> CC: validar calificación (5 está entre 1-5) ✅
+CC -> V: setRating(5)
+' CC -> V: setStatus(RATED)
+
+== Registro de la Calificación ==
+CC -> CR: registerRating(driver, 5)
+
+note right of CR
+  La calificación se guarda
+  para el historial del conductor 
+  (opcional)
+end note
+
+CR -> CON: addRating(5)
+
+/' \n📋 Estado final: CALIFICADO '/
+== Confirmación del Sistema ==
+UI --> U: "✅ ¡Gracias por tu calificación!\nCalificación enviada: ⭐⭐⭐⭐⭐"
+
+== Finalización Completa del Viaje ==
+UI -> UI: mostrarResumenFinal() (aca se puede usar el controlador de viajes)
+
+/' • Saldo final: $2200
+\n• Estado: CALIFICADO
+ '/
+UI --> U: "🎉 VIAJE COMPLETADO\nResumen del viaje:\n• Usuario: Juan Pérez\n\n• Viaje exitoso: Centro → Av. Corrientes\n• Tu calificación: ⭐⭐⭐⭐⭐"
+
+UI --> U: "✨ ¡Gracias por usar Uber! ✨"
+
+note over U
+  Viaje completado exitosamente:
+  
+  ✅ Llegó a su destino
+  ✅ Pago procesado correctamente
+  ✅ Calificación registrada
+  ✅ Puede solicitar un nuevo viaje
+end note
+
+@enduml
