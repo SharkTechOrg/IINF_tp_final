@@ -1,30 +1,28 @@
 package src.com.uber.ui;
 
-import src.com.uber.controllers.AddressController;
-import src.com.uber.controllers.TripOptionController;
-import src.com.uber.models.*;
+import src.com.uber.controllers.TripController;
+import src.com.uber.models.Location;
+import src.com.uber.models.TripOption;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class UserUI {
-    private AddressController addressController;
-    private TripOptionController tripOptionController;
-    private Trip trip;
+    private TripController tripController;
+    private Scanner scanner;
 
     public UserUI() {
-        this.addressController = new AddressController();
-        this.tripOptionController = new TripOptionController();
-        this.trip = new Trip();
+        this.tripController = new TripController();
+        this.scanner = new Scanner(System.in);
     }
 
     public void startTripRequestFlow() {
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("Bienvenido a Uber Trip Request");
 
         System.out.print("Ingrese dirección de destino: ");
         String input = scanner.nextLine();
 
-        List<Location> matches = addressController.findMatchingAddresses(input);
+        List<Location> matches = tripController.buscarDirecciones(input);
         if (matches.isEmpty()) {
             System.out.println("No se encontraron coincidencias.");
             return;
@@ -38,22 +36,20 @@ public class UserUI {
         System.out.print("Seleccione una dirección (número): ");
         int selectedIndex = scanner.nextInt();
         scanner.nextLine(); // limpiar buffer
-        Location selected = matches.get(selectedIndex - 1);
-        trip.setDestination(selected);
+        tripController.asignarDestino(matches.get(selectedIndex - 1));
 
-        System.out.println("Destino asignado: " + trip.getDestination());
+        System.out.println("Destino asignado: " + tripController.obtenerDestino());
 
         System.out.println("Opciones de viaje disponibles:");
-        List<TripOption> options = tripOptionController.getAvailableOptions();
+        List<TripOption> options = tripController.obtenerOpciones();
         for (int i = 0; i < options.size(); i++) {
             System.out.println((i + 1) + ". " + options.get(i));
         }
 
         System.out.print("Seleccione una opción de viaje (número): ");
         int selectedOption = scanner.nextInt();
-        TripOption chosenOption = options.get(selectedOption - 1);
-        trip.setTripOption(chosenOption);
+        tripController.asignarOpcion(options.get(selectedOption - 1));
 
-        System.out.println("Opción seleccionada: " + trip.getTripOption());
+        System.out.println("Opción seleccionada: " + tripController.obtenerOpcionSeleccionada());
     }
 }

@@ -6,9 +6,9 @@ import src.com.uber.models.TripOption;
 public class TripOptionController {
     public List<TripOption> getAvailableOptions() {
         return List.of(
-            new TripOption("UberX", 300.0),
-            new TripOption("UberXL", 500.0),
-            new TripOption("Comfort", 700.0)
+            new TripOption("UberX", 3400.0),
+            new TripOption("UberXL", 4000.0),
+            new TripOption("Comfort", 5500.0)
         );
     }
 }
