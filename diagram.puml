@@ -1,0 +1,103 @@
+@startuml UberTripSequence
+title Diagrama de Secuencia - Sistema de Viajes Uber
+
+actor Usuario as U
+participant "UberFlow\n(Main)" as UF
+participant "LocationRepo" as LR
+participant "TripRequestController" as TRC
+participant "Trip" as T
+participant "Passenger" as P
+participant "Driver" as D
+participant "Location" as L
+
+U -> UF: Ejecutar aplicación
+activate UF
+
+' Creación de objetos principales
+UF -> P: new Passenger("1", "María García", "1112345678")
+activate P
+P --> UF: passenger
+
+UF -> D: new Driver("1", "Juan Pérez", true)
+activate D
+D --> UF: driver
+
+UF -> LR: new LocationRepo()
+activate LR
+LR --> UF: locationRepo
+
+UF -> TRC: new TripRequestController()
+activate TRC
+TRC --> UF: controller
+
+' Búsqueda de ubicaciones
+UF -> LR: search("Corrientes")
+LR -> LR: Filtrar ubicaciones conocidas
+LR --> UF: foundLocations (List<Location>)
+
+alt foundLocations.isEmpty()
+    UF -> U: "No se encontraron direcciones coincidentes"
+    UF -> UF: return (terminar ejecución)
+else foundLocations no está vacía
+    ' Creación de ubicaciones
+    UF -> L: new Location("Av. Rivadavia 1234")
+    activate L
+    L --> UF: origin
+    
+    UF -> UF: destination = foundLocations.get(0)
+    
+    ' Solicitud de viaje
+    UF -> TRC: requestTrip(passenger, origin, destination)
+    TRC -> T: new Trip(passenger, origin, destination)
+    activate T
+    T -> T: status = SOLICITADO
+    T --> TRC: trip
+    TRC --> UF: trip
+    
+    UF -> U: Mostrar solicitud de viaje
+    
+    ' Verificación de disponibilidad del conductor
+    UF -> D: isAvailable()
+    D --> UF: true
+    
+    alt driver.isAvailable()
+        ' Asignación del conductor
+        UF -> T: assignDriver(driver)
+        T -> T: this.driver = driver
+        T -> T: status = ACEPTADO
+        
+        UF -> D: setAvailable(false)
+        D -> D: available = false
+        
+        UF -> U: "Viaje aceptado por " + driver.getName()
+    end
+    
+    ' Inicio del viaje
+    UF -> T: start()
+    T -> T: status = EN_PROGRESO
+    UF -> U: "Viaje iniciado"
+    
+    ' Finalización del viaje
+    UF -> T: complete()
+    T -> T: status = COMPLETADO
+    
+    UF -> D: setAvailable(true)
+    D -> D: available = true
+    
+    UF -> U: "Viaje finalizado"
+    
+    ' Consulta del estado final
+    UF -> T: getStatus()
+    T --> UF: COMPLETADO
+    UF -> U: "Estado final del viaje: " + status
+end
+
+deactivate T
+deactivate L
+deactivate D
+deactivate P
+deactivate TRC
+deactivate LR
+deactivate UF
+
+@enduml
