@@ -1,8 +1,8 @@
 package com.uber.ui;
 
 import com.uber.controller.DriverController;
-import com.uber.models.Driver;
-import com.uber.models.Trip;
+import com.uber.models.RateDriver;
+import com.uber.models.RateTrip;
 
 import java.util.Scanner;
 
