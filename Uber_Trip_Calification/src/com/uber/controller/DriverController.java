@@ -40,17 +40,16 @@ public class DriverController {
         }
     }
 
-    
+       public void mostrarResumenFinal(RateTrip trip) {
+        RateDriver driver = trip.getDriver();
+        System.out.println("VIAJE COMPLETADO");
+        System.out.println("Resumen del viaje:");
+        System.out.println("Usuario: " + trip.getPassengerName());
+        System.out.println("Viaje exitoso: " + trip.getOrigin() + " -> " + trip.getDestination());
+        System.out.println("Tu calificación: " + driver.getRating() + " estrellas");
+        System.out.println("Gracias por usar Uber");
+    }
 
-   public void mostrarResumenFinal(Trip trip) {
-    Driver driver = trip.getDriver();
-    System.out.println("VIAJE COMPLETADO");
-    System.out.println("Resumen del viaje:");
-    System.out.println("Usuario: " + trip.getPassengerName());
-    System.out.println("Viaje exitoso: " + trip.getOrigin() + " -> " + trip.getDestination());
-    System.out.println("Tu calificación: " + driver.getRating() + " estrellas");
-    System.out.println("Gracias por usar Uber");
-}
 
 }
 
