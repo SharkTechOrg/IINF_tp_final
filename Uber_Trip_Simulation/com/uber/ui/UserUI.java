@@ -4,14 +4,10 @@ import com.uber.controller.TripFlowController;
 import com.uber.models.Driver;
 import com.uber.models.Trip;
 
-import java.util.Scanner;
-
 public class UserUI {
     private final TripFlowController flowController = new TripFlowController();
 
     public void start() {
-        Scanner scanner = new Scanner(System.in);
-
         Trip trip = flowController.solicitarViaje();
 
         if (trip == null) {

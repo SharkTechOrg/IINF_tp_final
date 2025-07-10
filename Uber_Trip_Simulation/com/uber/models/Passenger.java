@@ -14,4 +14,10 @@ public class Passenger {
     public String getName() {
         return name;
     }
+    public String getId() {
+        return id;
+    }
+    public String getPhone() {
+        return phone;
+    }
 }

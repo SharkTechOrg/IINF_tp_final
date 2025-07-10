@@ -6,13 +6,13 @@ import com.uber.repositories.LocationRepo;
 import java.util.List;
 
 public class TripFlowController {
-    private final TripRequestController requestController;
+    // private final TripRequestController requestController;
     private final LocationRepo locationRepo;
     private final Driver driver;
     private final Passenger passenger;
 
     public TripFlowController() {
-        this.requestController = new TripRequestController();
+        // this.requestController = new TripRequestController();
         this.locationRepo = new LocationRepo();
 
         
@@ -27,7 +27,8 @@ public class TripFlowController {
         Location origin = new Location("Av. Rivadavia 1234");
         Location destination = found.get(0);
 
-        Trip trip = requestController.requestTrip(passenger, origin, destination);
+        // Trip trip = requestController.requestTrip(passenger, origin, destination);
+        Trip trip = new Trip(passenger, origin, destination);
         if (driver.isAvailable()) {
             trip.assignDriver(driver);
             driver.setAvailable(false);
