@@ -4,6 +4,9 @@ import com.uber.models.RateDriver;
 import com.uber.models.RateTrip;
 import com.uber.repositories.DriverRepository;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class DriverController {
     private final DriverRepository driverRepo;
 
