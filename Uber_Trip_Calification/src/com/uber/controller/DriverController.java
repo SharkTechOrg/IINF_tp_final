@@ -40,15 +40,7 @@ public class DriverController {
         }
     }
 
-    public boolean rateDriver(Trip trip, int rating) {
-        if (rating < 1 || rating > 5) {
-            return false;
-        }
-        Driver driver = trip.getDriver();
-        driver.setRating(rating);
-        driverRepo.registerRating(driver, rating);
-        return true;
-    }
+    
 
    public void mostrarResumenFinal(Trip trip) {
     Driver driver = trip.getDriver();
