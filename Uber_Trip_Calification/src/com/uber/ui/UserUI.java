@@ -36,9 +36,9 @@ public class UserUI {
         controller.mostrarResumenFinal(trip);
     }
 
-    private Trip simularViajeCompleto() {
-        Driver driver = new Driver("Carlos Pérez");
-        return new Trip("María García", "Av. Rivadavia 1234", "Corrientes y Callao", driver);
+     private RateTrip simularViajeCompleto() {
+        RateDriver driver = new RateDriver("Carlos Pérez");
+        return new RateTrip("María García", "Av. Rivadavia 1234", "Corrientes y Callao", driver);
     }
 }
 
