@@ -1,8 +1,8 @@
 package com.uber.ui;
 
 import com.uber.controller.DriverController;
-import com.uber.models.Driver;
-import com.uber.models.Trip;
+import com.uber.models.RateDriver;
+import com.uber.models.RateTrip;
 
 import java.util.Scanner;
 
@@ -16,29 +16,23 @@ public class UserUI {
     }
 
     public void start() {
-        Trip trip = simularViajeCompleto();
+        RateTrip trip = simularViajeCompleto();
 
         System.out.println("Viaje completado exitosamente");
         System.out.println("Estado actual: COMPLETADO");
-        System.out.println("CALIFICÁ TU VIAJE");
+        System.out.println("CALIFICÁ TU VIAJE\n");
 
-        Driver driver = trip.getDriver();
+        RateDriver driver = trip.getDriver();
         System.out.println("¿Cómo fue tu experiencia con " + driver.getName() + "?");
-        System.out.print("Seleccioná una calificación (1 a 5 estrellas): ");
-        int rating = scanner.nextInt();
 
-        if (controller.rateDriver(trip, rating)) {
-            System.out.println("Gracias por tu calificación!");
-        } else {
-            System.out.println("Calificación inválida. Debe ser entre 1 y 5.");
-        }
+        controller.calificarViaje(trip, scanner);
 
         controller.mostrarResumenFinal(trip);
     }
 
-    private Trip simularViajeCompleto() {
-        Driver driver = new Driver("Carlos Pérez");
-        return new Trip("María García", "Av. Rivadavia 1234", "Corrientes y Callao", driver);
+     private RateTrip simularViajeCompleto() {
+        RateDriver driver = new RateDriver("Carlos Pérez");
+        return new RateTrip("María García", "Av. Rivadavia 1234", "Corrientes y Callao", driver);
     }
 }
 

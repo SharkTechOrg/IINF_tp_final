@@ -3,12 +3,12 @@ package com.uber.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Driver {
+public class RateDriver {
     private final String name;
     private final List<Integer> ratings = new ArrayList<>();
     private int lastRating;
 
-    public Driver(String name) {
+    public RateDriver(String name) {
         this.name = name;
     }
 
