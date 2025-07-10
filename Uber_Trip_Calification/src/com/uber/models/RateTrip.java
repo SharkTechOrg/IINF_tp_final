@@ -1,12 +1,12 @@
 package com.uber.models;
 
-public class Trip {
+public class RateTrip {
     private final String passengerName;
     private final String origin;
     private final String destination;
-    private final Driver driver;
+    private final RateDriver driver;
 
-    public Trip(String passengerName, String origin, String destination, Driver driver) {
+    public RateTrip(String passengerName, String origin, String destination, RateDriver driver) {
         this.passengerName = passengerName;
         this.origin = origin;
         this.destination = destination;
@@ -25,7 +25,7 @@ public class Trip {
         return destination;
     }
 
-    public Driver getDriver() {
+    public RateDriver getDriver() {
         return driver;
     }
 }
