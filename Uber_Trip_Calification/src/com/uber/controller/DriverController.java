@@ -1,0 +1,35 @@
+package com.uber.controller;
+
+import com.uber.models.Driver;
+import com.uber.models.Trip;
+import com.uber.repositories.DriverRepository;
+
+public class DriverController {
+    private final DriverRepository driverRepo;
+
+    public DriverController() {
+        this.driverRepo = new DriverRepository();
+    }
+
+    public boolean rateDriver(Trip trip, int rating) {
+        if (rating < 1 || rating > 5) {
+            return false;
+        }
+        Driver driver = trip.getDriver();
+        driver.setRating(rating);
+        driverRepo.registerRating(driver, rating);
+        return true;
+    }
+
+   public void mostrarResumenFinal(Trip trip) {
+    Driver driver = trip.getDriver();
+    System.out.println("VIAJE COMPLETADO");
+    System.out.println("Resumen del viaje:");
+    System.out.println("Usuario: " + trip.getPassengerName());
+    System.out.println("Viaje exitoso: " + trip.getOrigin() + " -> " + trip.getDestination());
+    System.out.println("Tu calificación: " + driver.getRating() + " estrellas");
+    System.out.println("Gracias por usar Uber");
+}
+
+}
+
