@@ -30,4 +30,21 @@ public class Trip {
     public TripStatus getStatus() {
         return status;
     }
+
+  
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public Location getOrigin() {
+        return origin;
+    }
+
+    public Location getDestination() {
+        return destination;
+    }
+
+    public Passenger getPassenger() {
+        return passenger;
+    }
 }
