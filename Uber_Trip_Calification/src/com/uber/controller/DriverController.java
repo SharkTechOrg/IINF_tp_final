@@ -1,7 +1,7 @@
 package com.uber.controller;
 
-import com.uber.models.Driver;
-import com.uber.models.Trip;
+import com.uber.models.RateDriver;
+import com.uber.models.RateTrip;
 import com.uber.repositories.DriverRepository;
 
 public class DriverController {
