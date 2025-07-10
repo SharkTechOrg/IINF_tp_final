@@ -1,48 +1,27 @@
 package src.com.uber.controllers;
 
 import src.com.uber.models.Location;
-import src.com.uber.models.Trip;
 import src.com.uber.models.TripOption;
+import src.com.uber.repositories.AddressRepo;
 
 import java.util.List;
 
 public class TripController {
-    private AddressController addressController;
-    private TripOptionController tripOptionController;
-    private Trip trip;
+    private final AddressRepo addressRepo;
 
     public TripController() {
-        this.addressController = new AddressController();
-        this.tripOptionController = new TripOptionController();
-        this.trip = new Trip();
+        this.addressRepo = new AddressRepo();
     }
 
     public List<Location> buscarDirecciones(String input) {
-        return addressController.findMatchingAddresses(input);
+        return addressRepo.search(input);
     }
 
-    public void asignarDestino(Location location) {
-        trip.setDestination(location);
+    public boolean esDireccionValida(List<Location> resultados, int seleccion) {
+        return seleccion >= 1 && seleccion <= resultados.size();
     }
 
-    public Location obtenerDestino() {
-        return trip.getDestination();
-    }
-
-    public List<TripOption> obtenerOpciones() {
-        return tripOptionController.getAvailableOptions();
-    }
-
-    public void asignarOpcion(TripOption option) {
-        trip.setTripOption(option);
-    }
-
-    public TripOption obtenerOpcionSeleccionada() {
-        return trip.getTripOption();
-    }
-
-    public Trip obtenerViajeCompleto() {
-        return trip;
+    public boolean esOpcionDeViajeValida(List<TripOption> opciones, int seleccion) {
+        return seleccion >= 1 && seleccion <= opciones.size();
     }
 }
-
