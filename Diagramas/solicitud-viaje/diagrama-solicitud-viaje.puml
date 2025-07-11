@@ -1,0 +1,84 @@
+@startuml diagrama-solicitud-viaje
+!theme plain
+title Caso de Uso - Solicitud Detallada de Viaje con Opciones (Uber_Trip_Request)
+
+actor "Usuario" as U
+participant "UserUI" as UI
+participant "TripController" as TC
+participant "TripOptionController" as TOC
+participant "Trip" as T
+
+== Inicio de Solicitud de Viaje ==
+note over UI
+  Usuario quiere solicitar un viaje
+  y debe elegir destino y tipo de servicio
+end note
+
+UI --> U: "🚗 SOLICITAR VIAJE UBER"
+UI --> U: "Ingrese dirección de destino:"
+
+== Búsqueda de Dirección ==
+loop Hasta encontrar coincidencias
+    U -> UI: Escribir dirección (ej: "Palermo")
+    UI -> TC: buscarDirecciones("Palermo")
+    
+    alt Direcciones encontradas ✅
+        TC --> UI: [Lista de ubicaciones]
+        UI --> U: "📍 Direcciones encontradas:\n1. Palermo Soho\n2. Plaza Palermo\n3. Estación Palermo"
+    else Sin coincidencias ❌
+        TC --> UI: lista vacía
+        UI --> U: "❌ No se encontraron coincidencias.\nIntente nuevamente."
+    end
+end
+
+== Selección de Destino ==
+loop Hasta elegir opción válida
+    U -> UI: Seleccionar número (ej: "2")
+    UI -> TC: esDireccionValida(direcciones, 2)
+    
+    alt Selección válida ✅
+        TC --> UI: true
+        UI -> T: setDestination(Plaza Palermo)
+        UI --> U: "✅ Destino asignado: Plaza Palermo"
+    else Selección inválida ❌
+        TC --> UI: false
+        UI --> U: "❌ Número inválido. Intente nuevamente."
+    end
+end
+
+== Mostrar Opciones de Viaje ==
+UI -> TOC: getAvailableOptions()
+TOC --> UI: [UberX, UberPool, UberBlack]
+
+UI --> U: "🚗 Opciones de viaje disponibles:\n1. UberX - $1200\n2. UberPool - $800\n3. UberBlack - $2500"
+
+== Selección de Tipo de Viaje ==
+loop Hasta elegir opción válida
+    U -> UI: Seleccionar opción (ej: "1")
+    UI -> TC: esOpcionDeViajeValida(opciones, 1)
+    
+    alt Opción válida ✅
+        TC --> UI: true
+        UI -> T: setTripOption(UberX)
+        UI --> U: "✅ Opción seleccionada: UberX - $1200"
+    else Opción inválida ❌
+        TC --> UI: false
+        UI --> U: "❌ Opción inválida. Intente nuevamente."
+    end
+end
+
+== Confirmación Final ==
+UI --> U: "🎉 VIAJE CONFIGURADO\n📍 Destino: Plaza Palermo\n🚗 Servicio: UberX\n💰 Precio estimado: $1200"
+
+UI --> U: "¿Confirmar solicitud de viaje?"
+
+note over U
+  Configuración completada:
+  
+  ✅ Destino seleccionado correctamente
+  ✅ Tipo de servicio elegido
+  ✅ Precio confirmado
+  ✅ Listo para confirmar solicitud
+end note
+
+@enduml

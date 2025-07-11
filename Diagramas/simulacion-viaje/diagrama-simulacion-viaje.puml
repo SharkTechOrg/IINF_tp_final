@@ -1,0 +1,69 @@
+@startuml diagrama-simulacion-viaje
+!theme plain
+title Caso de Uso - Simulación de Viaje (Uber_Trip_Simulation)
+
+actor "Usuario" as U
+participant "UserUI" as UI
+participant "TripFlowController" as TFC
+participant "Trip" as T
+participant "Driver" as D
+
+== Solicitud del Viaje ==
+note over UI
+  Usuario quiere solicitar un viaje
+end note
+
+UI --> U: "🚗 ¿A dónde quieres ir?"
+
+U -> UI: Escribir "Corrientes"
+UI -> TFC: solicitarViaje()
+TFC --> UI: destinos encontrados
+
+UI --> U: "📍 Direcciones:\n• Av. Corrientes 1234\n• Corrientes y Florida"
+
+== Selección y Creación ==
+U -> UI: Seleccionar "Av. Corrientes 1234"
+UI -> TFC: crear viaje
+TFC -> T: new Trip(destino seleccionado)
+T -> T: setStatus(SOLICITADO)
+
+== Búsqueda de Conductor ==
+UI --> U: "🔍 Buscando conductor..."
+
+TFC -> D: isAvailable()
+D --> TFC: true ✅
+TFC -> T: assignDriver("Carlos Pérez")
+T -> T: setStatus(ACEPTADO)
+
+== Conductor Asignado ==
+UI --> U: "✅ Conductor: Carlos Pérez\n🚗 Toyota Corolla - ABC123\n⭐ Calificación: 4.9"
+
+UI --> U: "⏰ Llegará en 10 minutos"
+
+== Llegada y Viaje ==
+UI --> U: "🚗 Carlos está llegando..."
+UI --> U: "✅ Tu conductor ha llegado"
+
+UI -> TFC: iniciarViaje(trip)
+TFC -> T: start()
+T -> T: setStatus(EN_PROGRESO)
+
+UI --> U: "🛣️ En viaje hacia destino..."
+
+== Finalización ==
+UI -> TFC: completarViaje(trip)
+TFC -> T: complete()
+T -> T: setStatus(COMPLETADO)
+
+UI --> U: "🎯 ¡Llegaste a tu destino!"
+UI --> U: "⭐ Calificá tu viaje con Carlos:"
+
+note over U
+  Viaje completado:
+  
+  ✅ Destino alcanzado
+  ✅ Experiencia exitosa
+  ✅ Listo para calificar
+end note
+
+@enduml
