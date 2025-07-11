@@ -1,0 +1,48 @@
+@startuml diagrama-clases-calificacion-viaje
+!theme plain
+title Diagrama de Clases - Modelos del Módulo de Calificación (Rating Module Models)
+
+class "Conductor Calificable (RateDriver)" {
+    - name: String
+    - ratings: List<Integer>
+    - lastRating: int
+    + RateDriver(name: String)
+    + setRating(rating: int): void
+    + addRating(rating: int): void
+    + getRating(): int
+    + getName(): String
+    + getRatings(): List<Integer>
+}
+
+class "Viaje Calificable (RateTrip)" {
+    - passengerName: String
+    - origin: String
+    - destination: String
+    - driver: RateDriver
+    + RateTrip(passengerName: String, origin: String, destination: String, driver: RateDriver)
+    + getPassengerName(): String
+    + getOrigin(): String
+    + getDestination(): String
+    + getDriver(): RateDriver
+}
+
+' Relaciones
+"Viaje Calificable (RateTrip)" --> "Conductor Calificable (RateDriver)" : driver
+
+note top of "Conductor Calificable (RateDriver)"
+  Conductor especializado para calificaciones:
+  • Historial completo de calificaciones
+  • Última calificación recibida
+  • Permite calcular promedio de ratings
+  • Gestiona reputación del conductor
+end note
+
+note bottom of "Viaje Calificable (RateTrip)"
+  Viaje simplificado para calificación:
+  • Solo información básica del trayecto
+  • Enfocado en el proceso de rating
+  • Datos como Strings para simplicidad
+  • Vinculado al conductor a calificar
+end note
+
+@enduml

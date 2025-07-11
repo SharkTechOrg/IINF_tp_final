@@ -1,0 +1,46 @@
+@startuml diagrama-clases-solicitud-viaje
+!theme plain
+title Diagrama de Clases - Modelos del Módulo de Solicitud (Request Module Models)
+
+class "Ubicación (Location)" {
+    - address: String
+    + Location(address: String)
+    + getAddress(): String
+}
+
+class "Opción de Viaje (TripOption)" {
+    - name: String
+    - price: double
+    + TripOption(name: String, price: double)
+    + getName(): String
+    + getPrice(): double
+}
+
+class "Viaje (Trip)" {
+    - destination: Location
+    - tripOption: TripOption
+    + setDestination(destination: Location): void
+    + getDestination(): Location
+    + setTripOption(tripOption: TripOption): void
+    + getTripOption(): TripOption
+}
+
+' Relaciones
+"Viaje (Trip)" --> "Ubicación (Location)" : destination
+"Viaje (Trip)" --> "Opción de Viaje (TripOption)" : tripOption
+
+note top of "Opción de Viaje (TripOption)"
+  Representa los diferentes tipos de servicio:
+  • UberX - $3400
+  • UberXL - $4000  
+  • Comfort - $5500
+end note
+
+note bottom of "Viaje (Trip)"
+  Viaje básico para configuración:
+  • Solo destino y tipo de servicio
+  • No incluye pasajero ni conductor
+  • Usado para selección inicial
+end note
+
+@enduml

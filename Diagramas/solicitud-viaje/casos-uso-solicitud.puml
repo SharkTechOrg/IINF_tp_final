@@ -1,0 +1,41 @@
+@startuml casos-uso-solicitud-viaje
+!theme plain
+title Casos de Uso - Solicitud de Viaje (Trip Request Use Cases)
+
+' Actores
+actor "Usuario\n(User)" as Usuario
+
+' Límite del sistema
+rectangle "Módulo de Solicitud de Viaje" {
+    usecase "Solicitar Viaje\n(Request Trip)" as UC1
+    usecase "Buscar Destino\n(Search Destination)" as UC2
+    usecase "Seleccionar Destino\n(Select Destination)" as UC3
+    usecase "Elegir Tipo de Servicio\n(Choose Service Type)" as UC4
+    usecase "Confirmar Solicitud\n(Confirm Request)" as UC5
+}
+
+' Relaciones
+Usuario --> UC1 : inicia
+
+UC1 ..> UC2 : <<include>>
+UC1 ..> UC3 : <<include>>
+UC1 ..> UC4 : <<include>>
+UC1 ..> UC5 : <<include>>
+
+note top of UC1
+  **Flujo de solicitud:**
+  1. Usuario ingresa destino
+  2. Busca direcciones disponibles
+  3. Selecciona destino específico
+  4. Elige tipo de servicio (UberX, UberXL, etc.)
+  5. Confirma la solicitud
+end note
+
+note bottom of UC4
+  **Opciones disponibles:**
+  • UberX - $3400
+  • UberXL - $4000
+  • Comfort - $5500
+end note
+
+@enduml

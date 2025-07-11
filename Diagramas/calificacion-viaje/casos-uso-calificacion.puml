@@ -1,0 +1,36 @@
+@startuml casos-uso-calificacion-viaje
+!theme plain
+title Casos de Uso - Calificación de Viaje (Trip Rating Use Cases)
+
+' Actores
+actor "Usuario\n(User)" as Usuario
+
+' Límite del sistema
+rectangle "Módulo de Calificación de Viaje" {
+    usecase "Calificar Conductor\n(Rate Driver)" as UC1
+    usecase "Ver Resumen Final\n(View Final Summary)" as UC2
+}
+
+' Relaciones
+Usuario --> UC1 : califica experiencia
+Usuario --> UC2 : ve resumen del viaje
+
+' Extensión
+UC1 ..> UC2 : <<extend>>\n[después de calificar]
+
+note top of UC1
+  **Proceso de calificación:**
+  1. Usuario ingresa calificación (1-5)
+  2. Sistema valida y guarda
+  3. Actualiza historial del conductor
+  4. Muestra confirmación
+end note
+
+note bottom of UC2
+  **Resumen del viaje:**
+  • Datos del trayecto
+  • Calificación otorgada
+  • Mensaje de agradecimiento
+end note
+
+@enduml

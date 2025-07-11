@@ -1,0 +1,48 @@
+@startuml casos-uso-simulacion-viaje
+!theme plain
+title Casos de Uso - Simulación de Viaje (Trip Simulation Use Cases)
+
+' Actores
+actor "Pasajero\n(Passenger)" as Pasajero
+actor "Sistema\n(System)" as Sistema
+
+' Límite del sistema
+rectangle "Módulo de Simulación de Viaje" {
+    usecase "Solicitar Viaje\n(Request Trip)" as UC1
+    usecase "Asignar Conductor\n(Assign Driver)" as UC2
+    usecase "Iniciar Viaje\n(Start Trip)" as UC3
+    usecase "Completar Viaje\n(Complete Trip)" as UC4
+    usecase "Buscar Ubicaciones\n(Search Locations)" as UC5
+}
+
+' Relaciones
+Pasajero --> UC1 : solicita viaje
+Sistema --> UC2 : asigna conductor automáticamente
+Sistema --> UC3 : inicia viaje
+Sistema --> UC4 : completa viaje
+Sistema --> UC5 : busca en repositorio
+
+' Dependencias (flujo secuencial)
+UC1 ..> UC5 : <<include>>
+UC1 ..> UC2 : <<include>>
+UC2 ..> UC3 : <<extend>>
+UC3 ..> UC4 : <<extend>>
+
+note top of UC2
+  **Asignación Fija:**
+  • Conductor predefinido: "Carlos Pérez"
+  • Verificación de disponibilidad
+  • Cambio de estado del trip
+end note
+
+note bottom of UC1
+  **Flujo Principal:**
+  SOLICITADO → ACEPTADO → EN_PROGRESO → COMPLETADO
+  
+  **Implementación Simple:**
+  • Origen fijo: "Av. Rivadavia 1234"
+  • Destino: Busca "Corrientes" en repositorio
+  • Pasajero fijo: "María García"
+end note
+
+@enduml

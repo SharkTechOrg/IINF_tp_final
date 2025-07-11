@@ -1,0 +1,72 @@
+@startuml diagrama-casos-uso-general
+!theme plain
+title Casos de Uso General - Sistema Uber (General Use Cases - Uber System)
+
+' Actores
+actor "Usuario\n(User)" as Usuario
+actor "Conductor\n(Driver)" as Conductor
+
+' Límite del sistema
+rectangle "Sistema de Viajes Uber" {
+    
+    package "Solicitar Viaje" {
+        usecase "Configurar Viaje\n(Configure Trip)" as UC1
+    }
+    
+    package "Realizar Viaje" {
+        usecase "Ejecutar Viaje\n(Execute Trip)" as UC2
+    }
+    
+    package "Evaluar Viaje" {
+        usecase "Calificar Experiencia\n(Rate Experience)" as UC3
+    }
+}
+
+' Relaciones principales
+Usuario --> UC1 : 1. Solicita
+Usuario --> UC3 : 3. Califica
+
+Conductor --> UC2 : 2. Realiza
+
+' Flujo secuencial
+UC1 ..> UC2 : <<precede>>
+UC2 ..> UC3 : <<precede>>
+
+note top of UC1
+  **Módulo de Solicitud:**
+  • Buscar destino
+  • Seleccionar opciones de viaje
+  • Confirmar solicitud
+end note
+
+note top of UC2
+  **Módulo de Simulación:**
+  • Asignar conductor
+  • Iniciar y completar viaje
+  • Gestionar estados
+end note
+
+note top of UC3
+  **Módulo de Calificación:**
+  • Evaluar conductor
+  • Registrar calificación
+  • Actualizar historial
+end note
+
+note bottom of Usuario
+  **Flujo del usuario:**
+  1️⃣ Configura su viaje
+  2️⃣ Viaja con el conductor
+  3️⃣ Califica la experiencia
+end note
+
+note bottom of Conductor
+  **Responsabilidades:**
+  • Acepta viajes asignados
+  • Transporta al usuario
+  • Recibe calificaciones
+end note
+
+@enduml
+
+@enduml

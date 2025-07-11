@@ -1,0 +1,73 @@
+@startuml diagrama-clases-simulacion-viaje
+!theme plain
+title Diagrama de Clases - Modelos del Módulo de Simulación (Simulation Module Models)
+
+class "Ubicación (Location)" {
+    - address: String
+    + Location(address: String)
+    + getAddress(): String
+}
+
+class "Pasajero (Passenger)" {
+    - id: String
+    - name: String
+    - phone: String
+    + Passenger(id: String, name: String, phone: String)
+    + getName(): String
+}
+
+class "Conductor (Driver)" {
+    - id: String
+    - name: String
+    - isAvailable: boolean
+    + Driver(id: String, name: String, isAvailable: boolean)
+    + getName(): String
+}
+
+class "Viaje (Trip)" {
+    - passenger: Passenger
+    - driver: Driver
+    - origin: Location
+    - destination: Location
+    - status: TripStatus
+    + Trip(passenger: Passenger, origin: Location, destination: Location)
+    + assignDriver(driver: Driver): void
+    + start(): void
+    + complete(): void
+    + getDriver(): Driver
+    + getOrigin(): Location
+    + getDestination(): Location
+    + getPassenger(): Passenger
+}
+
+enum "Estado del Viaje (TripStatus)" {
+    SOLICITADO
+    ACEPTADO
+    EN_PROGRESO
+    COMPLETADO
+}
+
+' Relaciones
+"Viaje (Trip)" --> "Pasajero (Passenger)" : passenger
+"Viaje (Trip)" --> "Conductor (Driver)" : driver
+"Viaje (Trip)" --> "Ubicación (Location)" : origin
+"Viaje (Trip)" --> "Ubicación (Location)" : destination
+"Viaje (Trip)" --> "Estado del Viaje (TripStatus)" : status
+
+note top of "Estado del Viaje (TripStatus)"
+  Estados del ciclo de vida:
+  • SOLICITADO: Viaje pedido
+  • ACEPTADO: Conductor asignado
+  • EN_PROGRESO: Viaje iniciado
+  • COMPLETADO: Viaje terminado
+end note
+
+note bottom of "Viaje (Trip)"
+  Viaje completo con todas las entidades:
+  • Incluye pasajero y conductor
+  • Maneja origen y destino
+  • Controla estados del viaje
+  • Lógica de transiciones de estado
+end note
+
+@enduml
