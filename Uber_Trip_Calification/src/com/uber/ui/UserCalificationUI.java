@@ -6,11 +6,11 @@ import com.uber.models.RateTrip;
 
 import java.util.Scanner;
 
-public class UserUI {
+public class UserCalificationUI {
     private final Scanner scanner;
     private final DriverController controller;
 
-    public UserUI() {
+    public UserCalificationUI() {
         this.scanner = new Scanner(System.in);
         this.controller = new DriverController();
     }
