@@ -1,0 +1,62 @@
+package uber_trip_simulation.models;
+
+import uber_trip_request.models.TripOption; // ✅ Import necesario
+
+public class Trip {
+    private Passenger passenger;
+    private Driver driver;
+    private Location origin;
+    private Location destination;
+    private TripStatus status;
+
+    private TripOption tripOption; // 👈 nuevo
+
+    public Trip(Passenger passenger, Location origin, Location destination) {
+        this.passenger = passenger;
+        this.origin = origin;
+        this.destination = destination;
+        this.status = TripStatus.SOLICITADO;
+    }
+
+    public void assignDriver(Driver driver) {
+        this.driver = driver;
+        this.status = TripStatus.ACEPTADO;
+    }
+
+    public void start() {
+        this.status = TripStatus.EN_PROGRESO;
+    }
+
+    public void complete() {
+        this.status = TripStatus.COMPLETADO;
+    }
+
+    public TripStatus getStatus() {
+        return status;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public Location getOrigin() {
+        return origin;
+    }
+
+    public Location getDestination() {
+        return destination;
+    }
+
+    public Passenger getPassenger() {
+        return passenger;
+    }
+
+    // 👇 Métodos agregados
+    public void setTripOption(TripOption tripOption) {
+        this.tripOption = tripOption;
+    }
+
+    public TripOption getTripOption() {
+        return tripOption;
+    }
+}
